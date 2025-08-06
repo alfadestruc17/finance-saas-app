@@ -1,8 +1,5 @@
-const SingUpPage = () => {
-    return (
-        <div>
-            Sign Up Page
-        </div>
-    );
+import { SignUp } from '@clerk/nextjs'
+
+export default function Page() {
+  return <SignUp />
 }
-export default SingUpPage;
