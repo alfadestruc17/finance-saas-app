@@ -1,5 +1,9 @@
-import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
+import z from "zod";
 import { AccountForm } from "@/features/accounts/components/account-form";
+
+import { insertAccountSchema } from "@/db/schema";
+import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
+
 import {
 
     Sheet,
@@ -9,12 +13,20 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet";
 
+const formSchema = insertAccountSchema.pick({
+    name: true,
+})
+
+type FormValues = z.infer<typeof formSchema>;
 
 
 export const NewAccountSheet = () => {
 
-    const {isOpen, onClose } = useNewAccount();
+    const { isOpen, onClose } = useNewAccount();
 
+    const onSubmit = (values: FormValues) => {
+        console.log({ values });
+    }
 
     return (
         <Sheet open={isOpen} onOpenChange={onClose}>
@@ -27,7 +39,13 @@ export const NewAccountSheet = () => {
                         Crea una nueva cuenta para gestionar tus finanzas.
                     </SheetDescription>
                 </SheetHeader>
-                <AccountForm onSubmit={() => {}} disabled={false} />
+                <AccountForm
+                    onSubmit={onSubmit}
+                    disabled={false}
+                    defaultValues={{
+                        name: "",
+                    }}
+                />
             </SheetContent>
         </Sheet>
     )
