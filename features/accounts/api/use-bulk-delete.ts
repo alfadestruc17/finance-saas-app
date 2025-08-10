@@ -25,11 +25,12 @@ export const useBulkDeleteAccounts = () => {
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta Creada")
+            toast.success("Cuenta Eliminada")
             queryClient.invalidateQueries({ queryKey: ["accounts"] })
+            // TODO: Also invalidate summary
         },
         onError: () => {
-            toast.error("Fallo en crear cuenta")
+            toast.error("Fallo en eliminar cuenta")
         },
     });
     return mutation
