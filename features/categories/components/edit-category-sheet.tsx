@@ -1,7 +1,7 @@
 import z from "zod";
 
 import { CategoryForm } from "./category-form";
-import { useGetCategories } from "../api/use-get-categories";
+import { useGetCategory } from "../api/use-get-category";
 import { useOpenCategory } from "../hooks/use-open-category";
 import { useEditCategory } from "../api/use-edit-category";
 import { useDeleteCategory } from "../api/use-delete-category";
@@ -35,7 +35,7 @@ export const EditCategorySheet = () => {
         "Tu vas a eliminar esta categoria"
     )
 
-    const categoryQuery = useGetCategories(id);
+    const categoryQuery = useGetCategory(id);
     const editMutation = useEditCategory(id);
     const deleteMutation = useDeleteCategory(id);
 
@@ -69,7 +69,7 @@ export const EditCategorySheet = () => {
     const defaultValues = categoryQuery.data ? {
         name: categoryQuery.data.name
     } : {
-        name: " ",
+        name: "",
     }
 
     return (

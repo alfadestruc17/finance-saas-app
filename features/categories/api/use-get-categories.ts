@@ -7,9 +7,9 @@ export const useGetCategories = (id?: string) => {
         enabled: !!id,
         queryKey: ["categories", { id }],
         queryFn: async () => {
-            const response = await client.api.categories.$get();
+            const response = await client.api.categories.$get({ param: { id } });
 
-            if (!response.ok){
+            if (!response.ok) {
                 throw new Error("Error fetching categories");
             }
             const { data } = await response.json();
