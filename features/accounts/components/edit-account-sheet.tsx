@@ -1,8 +1,9 @@
 import z from "zod";
 
+import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { AccountForm } from "@/features/accounts/components/account-form";
-import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
 import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import { useOpenAccount } from "../hooks/use-open-account";
 
 import { insertAccountSchema } from "@/db/schema";
 import {
@@ -21,10 +22,12 @@ const formSchema = insertAccountSchema.pick({
 type FormValues = z.infer<typeof formSchema>;
 
 
-export const NewAccountSheet = () => {
+export const EditAccountSheet = () => {
 
-    const { isOpen, onClose } = useNewAccount();
+    const { isOpen, onClose, id } = useOpenAccount();
 
+
+    const accountQuery = useGetAccount(id)
     const mutation = useCreateAccount();
 
     const onSubmit = (values: FormValues) => {
@@ -33,6 +36,11 @@ export const NewAccountSheet = () => {
                 onClose();
             }
         });
+    }
+    const defaultValues = accountQuery.data ? {
+        name: accountQuery.data.name
+    } : {
+        name: "",
     }
 
     return (
@@ -49,9 +57,7 @@ export const NewAccountSheet = () => {
                 <AccountForm
                     onSubmit={onSubmit}
                     disabled={mutation.isPending}
-                    defaultValues={{
-                        name: "",
-                    }}
+                    defaultValues={defaultValues}
                 />
             </SheetContent>
         </Sheet>
