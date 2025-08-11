@@ -9,10 +9,10 @@ import { use } from "react";
 
 
 
-type ResponseType = InferResponseType<typeof client.api.accounts["bulk-delete"]["$post"]>
-type RequestType = InferRequestType<typeof client.api.accounts["bulk-delete"]["$post"]>["json"]
+type ResponseType = InferResponseType<typeof client.api.categories.$post>
+type RequestType = InferRequestType<typeof client.api.categories.$post>["json"]
 
-export const useBulkDeleteAccounts = () => {
+export const useCreateCategory = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -21,16 +21,15 @@ export const useBulkDeleteAccounts = () => {
         RequestType
     >({
         mutationFn: async (json) => {
-            const response = await client.api.accounts["bulk-delete"]["$post"]({ json })
+            const response = await client.api.categories.$post({ json })
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta Eliminada")
-            queryClient.invalidateQueries({ queryKey: ["accounts"] })
-            // TODO: Also invalidate summary
+            toast.success("Categoria Creada")
+            queryClient.invalidateQueries({ queryKey: ["categories"] })
         },
         onError: () => {
-            toast.error("Fallo en eliminar cuenta")
+            toast.error("Fallo en crear categoria")
         },
     });
     return mutation

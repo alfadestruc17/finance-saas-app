@@ -2,9 +2,9 @@ import z from "zod";
 
 import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { AccountForm } from "@/features/accounts/components/account-form";
-import { useOpenAccount } from "../hooks/use-open-account";
-import { useEditAccount } from "../api/use-edit-account";
-import { useDeleteAccount } from "../api/use-delete-account";
+import { useOpenAccount } from "../hooks/use-open-category";
+import { useEditAccount } from "../api/use-edit-category";
+import { useDeleteAccount } from "../api/use-delete-category";
 import { useConfirm } from "@/hooks/use-confirm";
 
 import { insertAccountSchema } from "@/db/schema";

@@ -9,9 +9,9 @@ import { use } from "react";
 
 
 
-type ResponseType = InferResponseType<typeof client.api.accounts[":id"]["$delete"]>
+type ResponseType = InferResponseType<typeof client.api.categories[":id"]["$delete"]>
 
-export const useDeleteAccount = (id?: string) => {
+export const useDeleteCategory = (id?: string) => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -19,19 +19,19 @@ export const useDeleteAccount = (id?: string) => {
         Error
     >({
         mutationFn: async () => {
-            const response = await client.api.accounts[":id"]["$delete"]({
+            const response = await client.api.categories[":id"]["$delete"]({
                 param: { id }
             })
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta eliminada")
-            queryClient.invalidateQueries({ queryKey: ["account", { id }] })
-            queryClient.invalidateQueries({ queryKey: ["accounts"] })
+            toast.success("Categoria eliminada")
+            queryClient.invalidateQueries({ queryKey: ["category", { id }] })
+            queryClient.invalidateQueries({ queryKey: ["categories"] })
             // TODO: invalidate summary and transacitons
         },
         onError: () => {
-            toast.error("Fallo en eliminar cuenta")
+            toast.error("Fallo en eliminar categoria")
         },
     });
     return mutation
