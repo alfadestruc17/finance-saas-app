@@ -4,6 +4,7 @@ import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { AccountForm } from "@/features/accounts/components/account-form";
 import { useOpenAccount } from "../hooks/use-open-account";
 import { useEditAccount } from "../api/use-edit-account";
+import { useDeleteAccount } from "../api/use-delete-account";
 
 
 import { insertAccountSchema } from "@/db/schema";
@@ -29,11 +30,13 @@ export const EditAccountSheet = () => {
     const { isOpen, onClose, id } = useOpenAccount();
 
 
-    const accountQuery = useGetAccount(id)
+    const accountQuery = useGetAccount(id);
     const editMutation = useEditAccount(id);
+    const deleteMutation = useDeleteAccount(id);
 
     const isPending =
-        editMutation.isPending
+        editMutation.isPending ||
+        deleteMutation.isPending
 
 
     const isLoanding = accountQuery.isLoading;
@@ -74,6 +77,7 @@ export const EditAccountSheet = () => {
                             onSubmit={onSubmit}
                             disabled={isPending}
                             defaultValues={defaultValues}
+                            onDelete={() => deleteMutation.mutate()}
                         />
                     )
                 }
