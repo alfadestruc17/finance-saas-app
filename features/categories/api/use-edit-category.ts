@@ -12,7 +12,7 @@ import { use } from "react";
 type ResponseType = InferResponseType<typeof client.api.categories[":id"]["$patch"]>
 type RequestType = InferRequestType<typeof client.api.categories[":id"]["$patch"]>["json"]
 
-export const useEditAccount = (id?: string) => {
+export const useEditCategory = (id?: string) => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<

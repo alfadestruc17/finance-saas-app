@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { insertAccountSchema } from "@/db/schema";
+import { insertCategoriesSchema } from "@/db/schema";
 import {
     Form,
     FormControl,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { on } from "events";
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategoriesSchema.pick({
     name: true,
 })
 
@@ -30,7 +30,7 @@ type Props = {
     disabled?: boolean;
 }
 
-export const AccountForm = ({
+export const CategoryForm = ({
     id,
     defaultValues,
     onSubmit,
@@ -64,7 +64,7 @@ export const AccountForm = ({
                             <FormControl>
                                 <Input
                                     disabled={disabled}
-                                    placeholder="Account Name"
+                                    placeholder="Category Name"
                                     {...field}
                                 />
                             </FormControl>
@@ -72,7 +72,7 @@ export const AccountForm = ({
                     )}
                 />
                 <Button className="w-full" disabled={disabled}>
-                    {id ? "Save Changes" : "Create Account"}
+                    {id ? "Save Changes" : "Create Category"}
                 </Button>
                 {!!id && (
                     <Button
@@ -83,7 +83,7 @@ export const AccountForm = ({
                         variant="outline"
                     >
                         <Trash className="size-4 mr-2" />
-                        Delete account
+                        Delete category
                     </Button>
                 )}
             </form>

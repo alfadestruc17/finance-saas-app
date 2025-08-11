@@ -204,7 +204,7 @@ const app = new Hono()
                 .returning({
                     id: categories.id,
                 })
-                
+
             if (!data) {
                 return c.json({ error: " no encontrado" }, 404)
             }

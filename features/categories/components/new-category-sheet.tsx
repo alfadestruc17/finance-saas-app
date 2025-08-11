@@ -1,10 +1,9 @@
 import z from "zod";
 
-import { AccountForm } from "@/features/accounts/components/account-form";
-import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
-
-import { insertAccountSchema } from "@/db/schema";
+import { CategoryForm } from "./category-form";
+import { useNewCategory } from "../hooks/use-new-category";
+import { useCreateCategory } from "../api/use-create-category";
+import { insertCategoriesSchema } from "@/db/schema";
 import {
 
     Sheet,
@@ -14,18 +13,18 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet";
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategoriesSchema.pick({
     name: true,
 })
 
 type FormValues = z.infer<typeof formSchema>;
 
 
-export const NewAccountSheet = () => {
+export const NewCategorySheet = () => {
 
-    const { isOpen, onClose } = useNewAccount();
+    const { isOpen, onClose } = useNewCategory();
 
-    const mutation = useCreateAccount();
+    const mutation = useCreateCategory();
 
     const onSubmit = (values: FormValues) => {
         mutation.mutate(values, {
@@ -40,17 +39,17 @@ export const NewAccountSheet = () => {
             <SheetContent className="space-y-4">
                 <SheetHeader>
                     <SheetTitle>
-                        Nueva Cuenta
+                        Nueva categoria
                     </SheetTitle>
                     <SheetDescription>
-                        Crea una nueva cuenta para gestionar tus finanzas.
+                        Crea una nueva categoria para gestionar tus finanzas.
                     </SheetDescription>
                 </SheetHeader>
-                <AccountForm
+                <CategoryForm
                     onSubmit={onSubmit}
                     disabled={mutation.isPending}
                     defaultValues={{
-                        name: "",
+                        name: " ",
                     }}
                 />
             </SheetContent>
