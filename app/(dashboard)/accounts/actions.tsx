@@ -3,7 +3,9 @@
 import { Edit, MoreHorizontal } from "lucide-react";
 
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
+import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
 
+import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -18,7 +20,14 @@ type Props = {
 
 
 export const Actions = ({ id }: Props) => {
+    
+    const deleteMutation = useDeleteAccount(id);
+    
     const { onOpen } = useOpenAccount();
+
+    const handleDelete = async () => {
+
+    }
 
     return (
         <>

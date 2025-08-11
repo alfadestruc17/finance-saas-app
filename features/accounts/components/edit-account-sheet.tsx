@@ -5,7 +5,7 @@ import { AccountForm } from "@/features/accounts/components/account-form";
 import { useOpenAccount } from "../hooks/use-open-account";
 import { useEditAccount } from "../api/use-edit-account";
 import { useDeleteAccount } from "../api/use-delete-account";
-
+import { useConfirm } from "@/hooks/use-confirm";
 
 import { insertAccountSchema } from "@/db/schema";
 import {
@@ -17,6 +17,7 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet";
 import { Loader2 } from "lucide-react";
+import { on } from "events";
 
 const formSchema = insertAccountSchema.pick({
     name: true,
@@ -29,6 +30,10 @@ export const EditAccountSheet = () => {
 
     const { isOpen, onClose, id } = useOpenAccount();
 
+    const [ConfirmationDialog, confirm] = useConfirm(
+        "Estas seguro",
+        "Tu vas a eliminar esta transacción"
+    )
 
     const accountQuery = useGetAccount(id);
     const editMutation = useEditAccount(id);
@@ -48,6 +53,19 @@ export const EditAccountSheet = () => {
             }
         });
     }
+
+    const onDelete = async () => {
+        const ok = await confirm();
+
+        if (ok) {
+            deleteMutation.mutate(undefined, {
+                onSuccess: () => {
+                    onClose();
+                }
+            })
+        }
+    }
+
     const defaultValues = accountQuery.data ? {
         name: accountQuery.data.name
     } : {
@@ -55,33 +73,36 @@ export const EditAccountSheet = () => {
     }
 
     return (
-        <Sheet open={isOpen} onOpenChange={onClose}>
-            <SheetContent className="space-y-4">
-                <SheetHeader>
-                    <SheetTitle>
-                        Editar Cuenta
-                    </SheetTitle>
-                    <SheetDescription>
-                        Edita una cuenta registrada.
-                    </SheetDescription>
-                </SheetHeader>
-                {isLoanding
-                    ? (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <Loader2 className="size-4 text-muted-foreground animate-spin" />
-                        </div>
-                    )
-                    : (
-                        <AccountForm
-                            id={id}
-                            onSubmit={onSubmit}
-                            disabled={isPending}
-                            defaultValues={defaultValues}
-                            onDelete={() => deleteMutation.mutate()}
-                        />
-                    )
-                }
-            </SheetContent>
-        </Sheet>
+        <>
+            <ConfirmationDialog />
+            <Sheet open={isOpen} onOpenChange={onClose}>
+                <SheetContent className="space-y-4">
+                    <SheetHeader>
+                        <SheetTitle>
+                            Editar Cuenta
+                        </SheetTitle>
+                        <SheetDescription>
+                            Edita una cuenta registrada.
+                        </SheetDescription>
+                    </SheetHeader>
+                    {isLoanding
+                        ? (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <Loader2 className="size-4 text-muted-foreground animate-spin" />
+                            </div>
+                        )
+                        : (
+                            <AccountForm
+                                id={id}
+                                onSubmit={onSubmit}
+                                disabled={isPending}
+                                defaultValues={defaultValues}
+                                onDelete={onDelete}
+                            />
+                        )
+                    }
+                </SheetContent>
+            </Sheet>
+        </>
     )
 }
