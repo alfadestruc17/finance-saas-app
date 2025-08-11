@@ -14,6 +14,7 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet";
+import { Loader2 } from "lucide-react";
 
 const formSchema = insertAccountSchema.pick({
     name: true,
@@ -29,6 +30,9 @@ export const EditAccountSheet = () => {
 
     const accountQuery = useGetAccount(id)
     const mutation = useCreateAccount();
+
+
+    const isLoanding = accountQuery.isLoading;
 
     const onSubmit = (values: FormValues) => {
         mutation.mutate(values, {
@@ -48,17 +52,27 @@ export const EditAccountSheet = () => {
             <SheetContent className="space-y-4">
                 <SheetHeader>
                     <SheetTitle>
-                        Nueva Cuenta
+                        Editar Cuenta
                     </SheetTitle>
                     <SheetDescription>
-                        Crea una nueva cuenta para gestionar tus finanzas.
+                        Edita una cuenta registrada.
                     </SheetDescription>
                 </SheetHeader>
+                { isLoanding 
+                ? (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <Loader2 className="size-4 text-muted-foreground animate-spin"/>
+                    </div>
+                )
+                : (
                 <AccountForm
+                    id={id}
                     onSubmit={onSubmit}
                     disabled={mutation.isPending}
                     defaultValues={defaultValues}
                 />
+                )
+            }
             </SheetContent>
         </Sheet>
     )
