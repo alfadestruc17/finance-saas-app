@@ -15,6 +15,13 @@
       "when": 1754671224422,
       "tag": "0001_youthful_adam_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1754915326785,
+      "tag": "0002_calm_kang",
+      "breakpoints": true
     }
   ]
 }
