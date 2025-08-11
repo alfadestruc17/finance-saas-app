@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { client } from "@/lib/hono"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Actions } from "./actions"
 
 export type ReponseType = InferResponseType<typeof client.api.accounts.$get, 200>["data"][0];
 
@@ -35,7 +36,7 @@ export const columns: ColumnDef<ReponseType>[] = [
   },
   {
     accessorKey: "name",
-     header: ({ column }) => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
@@ -47,4 +48,8 @@ export const columns: ColumnDef<ReponseType>[] = [
       )
     }
   },
+  {
+    id: "actions",
+    cell: ({ row }) => <Actions id={row.original.id} />
+  }
 ]
