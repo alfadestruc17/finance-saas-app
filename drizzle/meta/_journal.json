@@ -22,6 +22,13 @@
       "when": 1754915326785,
       "tag": "0002_calm_kang",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1755057395976,
+      "tag": "0003_public_blink",
+      "breakpoints": true
     }
   ]
 }
