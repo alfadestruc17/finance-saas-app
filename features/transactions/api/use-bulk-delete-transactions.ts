@@ -9,10 +9,10 @@ import { use } from "react";
 
 
 
-type ResponseType = InferResponseType<typeof client.api.accounts["bulk-delete"]["$post"]>
-type RequestType = InferRequestType<typeof client.api.accounts["bulk-delete"]["$post"]>["json"]
+type ResponseType = InferResponseType<typeof client.api.transactions["bulk-delete"]["$post"]>
+type RequestType = InferRequestType<typeof client.api.transactions["bulk-delete"]["$post"]>["json"]
 
-export const useBulkDeleteAccounts = () => {
+export const useBulkDeleteTransactions = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -21,16 +21,16 @@ export const useBulkDeleteAccounts = () => {
         RequestType
     >({
         mutationFn: async (json) => {
-            const response = await client.api.accounts["bulk-delete"]["$post"]({ json })
+            const response = await client.api.transactions["bulk-delete"]["$post"]({ json })
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta Eliminada")
-            queryClient.invalidateQueries({ queryKey: ["accounts"] })
+            toast.success("Transacción Eliminada")
+            queryClient.invalidateQueries({ queryKey: ["transactions"] })
             // TODO: Also invalidate summary
         },
         onError: () => {
-            toast.error("Fallo en eliminar cuenta")
+            toast.error("Fallo en eliminar transacción")
         },
     });
     return mutation
