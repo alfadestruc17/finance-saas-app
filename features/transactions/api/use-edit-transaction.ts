@@ -9,10 +9,10 @@ import { use } from "react";
 
 
 
-type ResponseType = InferResponseType<typeof client.api.accounts[":id"]["$patch"]>
-type RequestType = InferRequestType<typeof client.api.accounts[":id"]["$patch"]>["json"]
+type ResponseType = InferResponseType<typeof client.api.transactions[":id"]["$patch"]>
+type RequestType = InferRequestType<typeof client.api.transactions[":id"]["$patch"]>["json"]
 
-export const useEditAccount = (id?: string) => {
+export const useEditTransaction = (id?: string) => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -21,20 +21,20 @@ export const useEditAccount = (id?: string) => {
         RequestType
     >({
         mutationFn: async (json) => {
-            const response = await client.api.accounts[":id"]["$patch"]({
+            const response = await client.api.transactions[":id"]["$patch"]({
                 json,
                 param: { id }
             })
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta actualizada")
-            queryClient.invalidateQueries({ queryKey: ["account", { id }] })
-            queryClient.invalidateQueries({ queryKey: ["accounts"] })
+            toast.success("Transacción actualizada")
+            queryClient.invalidateQueries({ queryKey: ["transaction", { id }] })
+            queryClient.invalidateQueries({ queryKey: ["transactions"] })
             // TODO: invalidate summary and transacitons
         },
         onError: () => {
-            toast.error("Fallo en actualizar cuenta")
+            toast.error("Fallo en actualizar transaccióm")
         },
     });
     return mutation
