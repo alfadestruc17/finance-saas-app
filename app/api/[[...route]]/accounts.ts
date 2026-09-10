@@ -29,9 +29,9 @@ const app = new Hono()
                 .select({
                     id: accounts.id,
                     name: accounts.name,
-
                 })
                 .from(accounts)
+                .where(eq(accounts.userId, auth.userId));
 
             return c.json({ data })
         })

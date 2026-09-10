@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Actions } from "./actions"
 
-export type ReponseType = InferResponseType<typeof client.api.categories.$get, 200>["data"][0];
+export type ResponseType = InferResponseType<typeof client.api.categories.$get, 200>["data"][0];
 
-export const columns: ColumnDef<ReponseType>[] = [
+export const columns: ColumnDef<ResponseType>[] = [
   {
     id: "select",
     header: ({ table }) => (

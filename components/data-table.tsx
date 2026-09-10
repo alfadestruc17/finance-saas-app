@@ -26,7 +26,6 @@ import {
 import { useConfirm } from "@/hooks/use-confirm"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DialogContent } from "@radix-ui/react-dialog"
 
 
 interface DataTableProps<TData, TValue> {

@@ -17,7 +17,6 @@ import {
     SheetTitle,
 } from "@/components/ui/sheet";
 import { Loader2 } from "lucide-react";
-import { on } from "events";
 
 const formSchema = insertAccountSchema.pick({
     name: true,

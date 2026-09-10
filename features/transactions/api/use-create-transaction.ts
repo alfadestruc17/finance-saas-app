@@ -1,36 +1,29 @@
 import { toast } from "sonner";
-
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-
 import { client } from "@/lib/hono";
-import { use } from "react";
 
-
-
-type ResponseType = InferResponseType<typeof client.api.transactions.$post>
-type RequestType = InferRequestType<typeof client.api.transactions.$post>["json"]
+type ResponseType = InferResponseType<typeof client.api.transactions.$post>;
+type RequestType = InferRequestType<typeof client.api.transactions.$post>["json"];
 
 export const useCreateTransaction = () => {
     const queryClient = useQueryClient();
 
-    const mutation = useMutation<
-        ResponseType,
-        Error,
-        RequestType
-    >({
+    const mutation = useMutation<ResponseType, Error, RequestType>({
         mutationFn: async (json) => {
-            const response = await client.api.transactions.$post({ json })
+            const response = await client.api.transactions.$post({ json });
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Transacción Creada")
-            queryClient.invalidateQueries({ queryKey: ["transactions"] })
+            toast.success("Transacción creada");
+            queryClient.invalidateQueries({ queryKey: ["transactions"] });
+            queryClient.invalidateQueries({ queryKey: ["summary"] });
         },
         onError: () => {
-            toast.error("Fallo en crear Transacción")
+            toast.error("No se pudo crear la transacción");
         },
     });
-    return mutation
+
+    return mutation;
 };

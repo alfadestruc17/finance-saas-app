@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - '@clerk/shared'
+  - es5-ext
+  - esbuild
+  - sharp
+  - unrs-resolver
+
+allowBuilds:
+  esbuild: true

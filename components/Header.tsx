@@ -1,9 +1,10 @@
-
 import { UserButton, ClerkLoaded, ClerkLoading } from "@clerk/nextjs"
+import { Loader2 } from "lucide-react"
+
 import { HeaderLogo } from "./header-logo"
 import { Navigation } from "./navigation"
-import { Loader } from "lucide-react"
 import { WelcomeMsg } from "./welcome-msg"
+import { Filters } from "./filters"
 
 export const Header = () => {
     return (
@@ -18,10 +19,11 @@ export const Header = () => {
                         <UserButton afterSignOutUrl="/" />
                     </ClerkLoaded>
                     <ClerkLoading>
-                        <Loader className="size-8 animate-spin text.-slate-400" />
+                        <Loader2 className="size-8 animate-spin text-slate-400" />
                     </ClerkLoading>
                 </div>
                 <WelcomeMsg />
+                <Filters />
             </div>
         </header>
     )

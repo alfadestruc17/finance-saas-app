@@ -1,33 +1,12 @@
 {
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1754668335743,
-      "tag": "0000_fixed_doctor_spectrum",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1754671224422,
-      "tag": "0001_youthful_adam_warlock",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1754915326785,
-      "tag": "0002_calm_kang",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1755057395976,
-      "tag": "0003_public_blink",
+      "version": "7",
+      "when": 1789057676359,
+      "tag": "0000_cuddly_gideon",
       "breakpoints": true
     }
   ]

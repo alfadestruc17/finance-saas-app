@@ -40,18 +40,18 @@ const app = new Hono()
             const defaultFrom = subDays(defaultTo, 30)
 
             const startDate = from
-                ? parse(from, "yyyy-mm-dd", new Date())
+                ? parse(from, "yyyy-MM-dd", new Date())
                 : defaultFrom;
 
             const endDate = to
-                ? parse(to, "yyyy-mm-dd", new Date())
+                ? parse(to, "yyyy-MM-dd", new Date())
                 : defaultTo;
 
             const data = await db
                 .select({
                     id: transactions.id,
                     category: categories.name,
-                    catergoryId: transactions.categoryId,
+                    categoryId: transactions.categoryId,
                     date: transactions.date,
                     payee: transactions.payee,
                     amount: transactions.amount,
@@ -65,7 +65,7 @@ const app = new Hono()
                 .where(
                     and(
                         accountId ? eq(transactions.accountId, accountId) : undefined,
-                        eq(accounts.id, auth.userId),
+                        eq(accounts.userId, auth.userId),
                         gte(transactions.date, startDate),
                         lte(transactions.date, endDate),
                     )
@@ -95,7 +95,7 @@ const app = new Hono()
             const [data] = await db
                 .select({
                     id: transactions.id,
-                    catergoryId: transactions.categoryId,
+                    categoryId: transactions.categoryId,
                     date: transactions.date,
                     payee: transactions.payee,
                     amount: transactions.amount,
@@ -204,7 +204,7 @@ const app = new Hono()
                 .with(transactionsToDelete)
                 .delete(transactions)
                 .where(
-                    inArray(transactions.id, sql`{select id from ${transactionsToDelete}}`)
+                    inArray(transactions.id, sql`(select id from ${transactionsToDelete})`)
                 )
                 .returning({
                     id: transactions.id,

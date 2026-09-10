@@ -13,7 +13,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-import { columns } from "./colums";
+import { columns } from "./columns";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
@@ -32,7 +32,7 @@ const AccountsPage = () => {
 
     if (accountsQuery.isLoading) {
         return (
-            <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-34">
+            <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
                 <Card className="border-none drop-shadow-sm">
                     <CardHeader >
                         <Skeleton className="h-8 w-48" />     
@@ -49,7 +49,7 @@ const AccountsPage = () => {
 
 
     return (
-        <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-34">
+        <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
             <Card className="border-none drop-shadow-sm">
                 <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
                     <CardTitle className="text-xl line-clamp-1">
