@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { QueryProviders } from "@/providers/query-provider";
-import { SheetProvider } from "@/providers/sheet-provider";
+import { ModalProvider } from "@/providers/modal-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
@@ -36,7 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProviders>
-        <SheetProvider />
+        <ModalProvider />
         <Toaster />
         {children}
         </QueryProviders>
