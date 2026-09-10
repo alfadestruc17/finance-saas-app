@@ -7,7 +7,7 @@ import { eachDayOfInterval, subDays, format } from "date-fns";
 import * as schema from "../db/schema";
 import { convertAmountToMiliunits } from "../lib/utils";
 
-config({ path: ".env.local" });
+config({ path: [".env.local", ".env"] });
 
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql, { schema });
@@ -41,11 +41,23 @@ const generateTransactionsForDay = (
     const numTransactions = randomInt(1, 4);
     const rows: (typeof schema.transactions.$inferInsert)[] = [];
 
+    const payees = [
+        "Supermercado Central",
+        "Cafetería La Esquina",
+        "Netflix",
+        "Estación de servicio",
+        "Farmacia San Juan",
+        "Restaurante El Puerto",
+        "Tienda de ropa",
+        "Nómina",
+        "Transferencia recibida",
+    ];
+
     for (let i = 0; i < numTransactions; i++) {
-        const isExpense = Math.random() > 0.6;
+        const isExpense = Math.random() > 0.25;
         const amount = isExpense
-            ? convertAmountToMiliunits(randomInt(5, 200) * -1)
-            : convertAmountToMiliunits(randomInt(100, 2500));
+            ? convertAmountToMiliunits(randomInt(5, 250) * -1)
+            : convertAmountToMiliunits(randomInt(800, 3000));
 
         rows.push({
             id: createId(),
@@ -53,8 +65,10 @@ const generateTransactionsForDay = (
             categoryId: categoryIds[randomInt(0, categoryIds.length - 1)],
             date: day,
             amount,
-            payee: "Comercio de ejemplo",
-            notes: "Transacción generada por el seed",
+            payee: isExpense
+                ? payees[randomInt(0, payees.length - 3)]
+                : payees[randomInt(payees.length - 2, payees.length - 1)],
+            notes: null,
         });
     }
 

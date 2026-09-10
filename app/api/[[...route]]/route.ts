@@ -14,9 +14,12 @@ app.onError((err, c) => {
         return err.getResponse()
     }
 
+    console.error("[api] unhandled error:", err);
     return c.json({ error: 'Internal Server Error' }, 500);
 })
 
+// `routes` is consumed by `AppType` below to type the Hono RPC client.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app
     .route("/accounts", accounts)
     .route("/categories", categories)

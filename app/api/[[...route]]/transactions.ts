@@ -1,7 +1,8 @@
 import { z } from "zod"
 import { Hono } from 'hono'
 import { subDays, parse } from "date-fns"
-import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
+import { getAuth } from "@hono/clerk-auth"
+import { clerkMiddleware } from "./clerk-middleware"
 import { HTTPException } from 'hono/http-exception'
 import { zValidator } from '@hono/zod-validator'
 import { createId } from '@paralleldrive/cuid2'

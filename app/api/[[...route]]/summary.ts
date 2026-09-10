@@ -1,7 +1,8 @@
 import { z } from "zod"
 import { Hono } from "hono"
 import { subDays, parse, differenceInDays } from "date-fns"
-import { clerkMiddleware, getAuth } from "@hono/clerk-auth"
+import { getAuth } from "@hono/clerk-auth"
+import { clerkMiddleware } from "./clerk-middleware"
 import { zValidator } from "@hono/zod-validator"
 import { and, desc, eq, gte, lte, lt, sql, sum } from "drizzle-orm"
 
@@ -65,8 +66,19 @@ const app = new Hono()
                     );
             }
 
-            const [currentPeriod] = await fetchFinancialData(auth.userId, startDate, endDate);
-            const [lastPeriod] = await fetchFinancialData(auth.userId, lastPeriodStart, lastPeriodEnd);
+            const [currentRaw] = await fetchFinancialData(auth.userId, startDate, endDate);
+            const [lastRaw] = await fetchFinancialData(auth.userId, lastPeriodStart, lastPeriodEnd);
+
+            const currentPeriod = {
+                income: currentRaw?.income ?? 0,
+                expenses: currentRaw?.expenses ?? 0,
+                remaining: currentRaw?.remaining ?? 0,
+            };
+            const lastPeriod = {
+                income: lastRaw?.income ?? 0,
+                expenses: lastRaw?.expenses ?? 0,
+                remaining: lastRaw?.remaining ?? 0,
+            };
 
             const incomeChange = calculatePercentageChange(currentPeriod.income, lastPeriod.income);
             const expensesChange = calculatePercentageChange(currentPeriod.expenses, lastPeriod.expenses);
