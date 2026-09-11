@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { eachDayOfInterval, isSameDay, subDays, format } from "date-fns"
+import { es as esDateLocale, enUS as enDateLocale } from "date-fns/locale"
+
+import type { Locale } from "@/i18n/config"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -14,10 +17,14 @@ export function convertAmountFromMiliunits(amount: number) {
   return amount / 1000;
 }
 
-export function formatCurrency(value: number) {
-  return Intl.NumberFormat("en-US", {
+const intlLocale = (locale: Locale = "es") => (locale === "en" ? "en-US" : "es-ES");
+export const dateFnsLocale = (locale: Locale = "es") =>
+  locale === "en" ? enDateLocale : esDateLocale;
+
+export function formatCurrency(value: number, locale: Locale = "es", currency = "USD") {
+  return Intl.NumberFormat(intlLocale(locale), {
     style: "currency",
-    currency: "USD",
+    currency,
     minimumFractionDigits: 2,
   }).format(value);
 }
@@ -63,26 +70,28 @@ type Period = {
   to: string | Date | undefined;
 };
 
-export function formatDateRange(period?: Period) {
+export function formatDateRange(period?: Period, locale: Locale = "es") {
   const defaultTo = new Date();
   const defaultFrom = subDays(defaultTo, 30);
+  const opts = { locale: dateFnsLocale(locale) };
 
   if (!period?.from) {
-    return `${format(defaultFrom, "LLL dd")} - ${format(defaultTo, "LLL dd, y")}`;
+    return `${format(defaultFrom, "LLL dd", opts)} - ${format(defaultTo, "LLL dd, y", opts)}`;
   }
 
   if (period.to) {
-    return `${format(period.from, "LLL dd")} - ${format(period.to, "LLL dd, y")}`;
+    return `${format(period.from, "LLL dd", opts)} - ${format(period.to, "LLL dd, y", opts)}`;
   }
 
-  return format(period.from, "LLL dd, y");
+  return format(period.from, "LLL dd, y", opts);
 }
 
 export function formatPercentage(
   value: number,
   options: { addPrefix?: boolean } = { addPrefix: false },
+  locale: Locale = "es",
 ) {
-  const result = new Intl.NumberFormat("en-US", {
+  const result = new Intl.NumberFormat(intlLocale(locale), {
     style: "percent",
   }).format(value / 100);
 

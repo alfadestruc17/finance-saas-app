@@ -1,17 +1,16 @@
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-
 import { client } from "@/lib/hono";
-
-
 
 type ResponseType = InferResponseType<typeof client.api.accounts["bulk-delete"]["$post"]>
 type RequestType = InferRequestType<typeof client.api.accounts["bulk-delete"]["$post"]>["json"]
 
 export const useBulkDeleteAccounts = () => {
+    const t = useTranslations("accounts.toasts");
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -24,12 +23,13 @@ export const useBulkDeleteAccounts = () => {
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta Eliminada")
+            toast.success(t("bulkDeleted"))
             queryClient.invalidateQueries({ queryKey: ["accounts"] })
-            // TODO: Also invalidate summary
+            queryClient.invalidateQueries({ queryKey: ["transactions"] })
+            queryClient.invalidateQueries({ queryKey: ["summary"] })
         },
         onError: () => {
-            toast.error("Fallo en eliminar cuenta")
+            toast.error(t("bulkDeleteError"))
         },
     });
     return mutation

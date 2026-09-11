@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "title": "Finance App",
+    "description": "Manage your finances: accounts, categories, transactions and reports."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "continue": "Continue",
+    "all": "All",
+    "selectAll": "Select all",
+    "selectRow": "Select row",
+    "pickDate": "Pick a date"
+  },
+  "nav": {
+    "overview": "Overview",
+    "transactions": "Transactions",
+    "accounts": "Accounts",
+    "categories": "Categories"
+  },
+  "header": {
+    "welcomeBack": "Welcome back{name}!",
+    "subtitle": "This is your financial overview report"
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "es": "Español",
+    "en": "English"
+  },
+  "confirm": {
+    "areYouSure": "Are you sure?",
+    "bulkDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete the selected items."
+    },
+    "selectAccount": {
+      "title": "Select an account",
+      "description": "Choose an account to import these transactions into."
+    }
+  },
+  "filters": {
+    "accountPlaceholder": "Account",
+    "allAccounts": "All accounts",
+    "reset": "Reset",
+    "apply": "Apply"
+  },
+  "dataTable": {
+    "filterPlaceholder": "Filter by {field}...",
+    "deleteSelected": "Delete ({count})",
+    "selectedOf": "{selected} of {total} row(s) selected.",
+    "noResults": "No results.",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "accounts": {
+    "pageTitle": "Accounts",
+    "addNew": "Add new",
+    "name": "Name",
+    "namePlaceholder": "Account name",
+    "new": {
+      "title": "New account",
+      "description": "Create a new account to manage your finances."
+    },
+    "edit": {
+      "title": "Edit account",
+      "description": "Edit an existing account."
+    },
+    "createButton": "Create account",
+    "saveButton": "Save changes",
+    "deleteButton": "Delete account",
+    "confirmDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete this account."
+    },
+    "confirmBulkDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete the selected accounts."
+    },
+    "toasts": {
+      "created": "Account created",
+      "createError": "Failed to create account",
+      "updated": "Account updated",
+      "updateError": "Failed to update account",
+      "deleted": "Account deleted",
+      "deleteError": "Failed to delete account",
+      "bulkDeleted": "Accounts deleted",
+      "bulkDeleteError": "Failed to delete accounts"
+    }
+  },
+  "categories": {
+    "pageTitle": "Categories",
+    "addNew": "Add new",
+    "name": "Name",
+    "namePlaceholder": "Category name",
+    "new": {
+      "title": "New category",
+      "description": "Create a new category to organize your transactions."
+    },
+    "edit": {
+      "title": "Edit category",
+      "description": "Edit an existing category."
+    },
+    "createButton": "Create category",
+    "saveButton": "Save changes",
+    "deleteButton": "Delete category",
+    "confirmDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete this category."
+    },
+    "confirmBulkDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete the selected categories."
+    },
+    "toasts": {
+      "created": "Category created",
+      "createError": "Failed to create category",
+      "updated": "Category updated",
+      "updateError": "Failed to update category",
+      "deleted": "Category deleted",
+      "deleteError": "Failed to delete category",
+      "bulkDeleted": "Categories deleted",
+      "bulkDeleteError": "Failed to delete categories"
+    }
+  },
+  "transactions": {
+    "pageTitle": "Transaction history",
+    "add": "Add new",
+    "importButton": "Import",
+    "noCategory": "Uncategorized",
+    "new": {
+      "title": "New transaction",
+      "description": "Add a new transaction."
+    },
+    "edit": {
+      "title": "Edit transaction",
+      "description": "Edit an existing transaction."
+    },
+    "createButton": "Create transaction",
+    "saveButton": "Save changes",
+    "deleteButton": "Delete transaction",
+    "confirmDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete this transaction."
+    },
+    "confirmBulkDelete": {
+      "title": "Are you sure?",
+      "description": "You are about to permanently delete the selected transactions."
+    },
+    "columns": {
+      "date": "Date",
+      "category": "Category",
+      "payee": "Payee",
+      "amount": "Amount",
+      "account": "Account"
+    },
+    "form": {
+      "account": "Account",
+      "category": "Category",
+      "payee": "Payee",
+      "amount": "Amount",
+      "notes": "Notes",
+      "selectAccount": "Select an account",
+      "selectCategory": "Select a category",
+      "payeePlaceholder": "Add a payee",
+      "amountPlaceholder": "0.00",
+      "notesPlaceholder": "Optional notes",
+      "amountTooltip": "Use [+] for income and [-] for expenses",
+      "amountIncomeHelper": "This transaction counts as income",
+      "amountExpenseHelper": "This transaction counts as an expense"
+    },
+    "toasts": {
+      "created": "Transaction created",
+      "createError": "Failed to create transaction",
+      "updated": "Transaction updated",
+      "updateError": "Failed to update transaction",
+      "deleted": "Transaction deleted",
+      "deleteError": "Failed to delete transaction",
+      "bulkCreated": "Transactions created",
+      "bulkCreateError": "Failed to create transactions",
+      "bulkDeleted": "Transactions deleted",
+      "bulkDeleteError": "Failed to delete transactions"
+    },
+    "import": {
+      "title": "Import transaction",
+      "cancel": "Cancel",
+      "continue": "Continue ({progress} / {total})",
+      "skip": "Skip"
+    }
+  },
+  "summary": {
+    "remaining": "Remaining",
+    "income": "Income",
+    "expenses": "Expenses",
+    "sincePeriod": "from last period",
+    "chart": {
+      "title": "Transactions",
+      "typeLabel": "Chart type",
+      "area": "Area chart",
+      "line": "Line chart",
+      "bar": "Bar chart",
+      "empty": "No data for this period"
+    },
+    "pie": {
+      "title": "Categories",
+      "typeLabel": "Chart type",
+      "pie": "Pie chart",
+      "radar": "Radar chart",
+      "radial": "Radial chart",
+      "empty": "No data for this period"
+    }
+  }
+}

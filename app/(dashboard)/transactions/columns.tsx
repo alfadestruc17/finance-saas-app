@@ -2,11 +2,13 @@
 
 import { InferResponseType } from "hono"
 import { format } from "date-fns"
+import { useLocale, useTranslations } from "next-intl"
 import { ArrowUpDown } from "lucide-react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { client } from "@/lib/hono"
 import { cn, convertAmountFromMiliunits, formatCurrency } from "@/lib/utils"
+import type { Locale } from "@/i18n/config"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -29,6 +31,7 @@ const CategoryColumn = ({
   categoryId: string | null
 }) => {
   const { onOpen } = useOpenCategory()
+  const t = useTranslations("transactions")
 
   return (
     <span
@@ -38,7 +41,7 @@ const CategoryColumn = ({
         !category && "text-rose-500",
       )}
     >
-      {category || "Sin categoría"}
+      {category || t("noCategory")}
     </span>
   )
 }
@@ -62,56 +65,108 @@ const AccountColumn = ({
   )
 }
 
+const SortableHeader = ({
+  label,
+  onSort,
+}: {
+  label: string
+  onSort: () => void
+}) => (
+  <Button variant="ghost" onClick={onSort}>
+    {label}
+    <ArrowUpDown className="ml-2 h-4 w-4" />
+  </Button>
+)
+
+const AmountCell = ({ amount }: { amount: number }) => {
+  const locale = useLocale() as Locale
+  const formatted = formatCurrency(convertAmountFromMiliunits(amount), locale)
+
+  return (
+    <Badge
+      variant={amount < 0 ? "destructive" : "default"}
+      className={cn(
+        "text-xs font-medium px-3.5 py-2.5",
+        amount >= 0 && "bg-emerald-500 hover:bg-emerald-600",
+      )}
+    >
+      {formatted}
+    </Badge>
+  )
+}
+
+const SelectAllHeader = ({
+  table,
+}: {
+  table: { getIsAllPageRowsSelected: () => boolean; getIsSomePageRowsSelected: () => boolean; toggleAllPageRowsSelected: (value: boolean) => void };
+}) => {
+  const t = useTranslations("common");
+
+  return (
+    <Checkbox
+      checked={
+        table.getIsAllPageRowsSelected() ||
+        (table.getIsSomePageRowsSelected() && "indeterminate")
+      }
+      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+      aria-label={t("selectAll")}
+    />
+  )
+}
+
+const SelectRowCell = ({
+  row,
+}: {
+  row: { getIsSelected: () => boolean; toggleSelected: (value: boolean) => void };
+}) => {
+  const t = useTranslations("common");
+
+  return (
+    <Checkbox
+      checked={row.getIsSelected()}
+      onCheckedChange={(value) => row.toggleSelected(!!value)}
+      aria-label={t("selectRow")}
+    />
+  )
+}
+
+const DateCell = ({ date }: { date: string }) => {
+  const locale = useLocale() as Locale
+  return <span>{format(new Date(date), locale === "en" ? "MMM dd, yyyy" : "dd MMM, yyyy")}</span>
+}
+
 export const columns: ColumnDef<ResponseType>[] = [
   {
     id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    header: ({ table }) => <SelectAllHeader table={table} />,
+    cell: ({ row }) => <SelectRowCell row={row} />,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "date",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Fecha
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => {
-      const date = row.getValue("date") as string
-      return <span>{format(new Date(date), "dd MMM, yyyy")}</span>
+    header: function DateHeader({ column }) {
+      const t = useTranslations("transactions.columns")
+      return (
+        <SortableHeader
+          label={t("date")}
+          onSort={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        />
+      )
     },
+    cell: ({ row }) => <DateCell date={row.getValue("date")} />,
   },
   {
     accessorKey: "category",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Categoría
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    header: function CategoryHeader({ column }) {
+      const t = useTranslations("transactions.columns")
+      return (
+        <SortableHeader
+          label={t("category")}
+          onSort={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        />
+      )
+    },
     cell: ({ row }) => (
       <CategoryColumn
         category={row.original.category}
@@ -121,55 +176,40 @@ export const columns: ColumnDef<ResponseType>[] = [
   },
   {
     accessorKey: "payee",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Beneficiario
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-  },
-  {
-    accessorKey: "amount",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Monto
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-      const formatted = formatCurrency(convertAmountFromMiliunits(amount))
-
+    header: function PayeeHeader({ column }) {
+      const t = useTranslations("transactions.columns")
       return (
-        <Badge
-          variant={amount < 0 ? "destructive" : "default"}
-          className={cn(
-            "text-xs font-medium px-3.5 py-2.5",
-            amount >= 0 && "bg-emerald-500 hover:bg-emerald-600",
-          )}
-        >
-          {formatted}
-        </Badge>
+        <SortableHeader
+          label={t("payee")}
+          onSort={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        />
       )
     },
   },
   {
+    accessorKey: "amount",
+    header: function AmountHeader({ column }) {
+      const t = useTranslations("transactions.columns")
+      return (
+        <SortableHeader
+          label={t("amount")}
+          onSort={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        />
+      )
+    },
+    cell: ({ row }) => <AmountCell amount={parseFloat(row.getValue("amount"))} />,
+  },
+  {
     accessorKey: "account",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Cuenta
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    header: function AccountHeader({ column }) {
+      const t = useTranslations("transactions.columns")
+      return (
+        <SortableHeader
+          label={t("account")}
+          onSort={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        />
+      )
+    },
     cell: ({ row }) => (
       <AccountColumn
         account={row.original.account}

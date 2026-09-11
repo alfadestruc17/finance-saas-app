@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { useOpenTransaction } from "@/features/transactions/hooks/use-open-transaction";
@@ -19,9 +20,12 @@ type Props = {
 };
 
 export const Actions = ({ id }: Props) => {
+    const t = useTranslations("common");
+    const tTransactions = useTranslations("transactions");
+
     const [ConfirmDialog, confirm] = useConfirm(
-        "¿Estás seguro?",
-        "Vas a eliminar esta transacción de forma permanente.",
+        tTransactions("confirmDelete.title"),
+        tTransactions("confirmDelete.description"),
     );
 
     const deleteMutation = useDeleteTransaction(id);
@@ -50,14 +54,14 @@ export const Actions = ({ id }: Props) => {
                         onClick={() => onOpen(id)}
                     >
                         <Edit className="size-4 mr-2" />
-                        Editar
+                        {t("edit")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         disabled={deleteMutation.isPending}
                         onClick={handleDelete}
                     >
                         <Trash className="size-4 mr-2" />
-                        Eliminar
+                        {t("delete")}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

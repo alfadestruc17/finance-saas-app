@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { useOpenCategory } from "@/features/categories/hooks/use-open-category";
@@ -19,9 +20,12 @@ type Props = {
 
 
 export const Actions = ({ id }: Props) => {
+    const t = useTranslations("common");
+    const tCategories = useTranslations("categories");
+
     const [ConfirmationDialog, confirm] = useConfirm(
-        "Are you sure",
-        " "
+        tCategories("confirmDelete.title"),
+        tCategories("confirmDelete.description"),
     )
 
     const deleteMutation = useDeleteCategory(id);
@@ -51,14 +55,14 @@ export const Actions = ({ id }: Props) => {
                         onClick={() => onOpen(id)}
                     >
                         <Edit className="size-4 mr-2" />
-                        Edit
+                        {t("edit")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         disabled={deleteMutation.isPending}
                         onClick={handleDelete}
                     >
                         <Trash className="size-4 mr-2" />
-                        delete
+                        {t("delete")}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

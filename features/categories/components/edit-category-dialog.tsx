@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { CategoryForm } from "@/features/categories/components/category-form";
 import { useGetCategory } from "@/features/categories/api/use-get-category";
@@ -15,11 +16,12 @@ const formSchema = insertCategoriesSchema.pick({ name: true });
 type FormValues = z.infer<typeof formSchema>;
 
 export const EditCategoryDialog = () => {
+    const t = useTranslations("categories");
     const { isOpen, onClose, id } = useOpenCategory();
 
     const [ConfirmDialog, confirm] = useConfirm(
-        "¿Estás seguro?",
-        "Vas a eliminar esta categoría de forma permanente.",
+        t("confirmDelete.title"),
+        t("confirmDelete.description"),
     );
 
     const categoryQuery = useGetCategory(id);
@@ -59,8 +61,8 @@ export const EditCategoryDialog = () => {
             <ResponsiveModal
                 open={isOpen}
                 onOpenChange={onClose}
-                title="Editar categoría"
-                description="Edita una categoría registrada."
+                title={t("edit.title")}
+                description={t("edit.description")}
             >
                 {isLoading ? (
                     <div className="flex items-center justify-center py-8">

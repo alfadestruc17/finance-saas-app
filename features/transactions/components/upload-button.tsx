@@ -2,6 +2,7 @@
 
 import { Upload } from "lucide-react";
 import { useCSVReader } from "react-papaparse";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export const UploadButton = ({ onUpload }: Props) => {
+    const t = useTranslations("transactions");
     const { CSVReader } = useCSVReader();
 
     return (
@@ -17,7 +19,7 @@ export const UploadButton = ({ onUpload }: Props) => {
             {({ getRootProps }: { getRootProps: () => Record<string, unknown> }) => (
                 <Button size="sm" className="w-full lg:w-auto" {...getRootProps()}>
                     <Upload className="size-4 mr-2" />
-                    Importar
+                    {t("importButton")}
                 </Button>
             )}
         </CSVReader>

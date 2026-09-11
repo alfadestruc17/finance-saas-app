@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Tooltip,
     XAxis,
@@ -7,7 +9,10 @@ import {
     CartesianGrid,
 } from "recharts";
 import { format } from "date-fns";
+import { useLocale } from "next-intl";
 
+import { dateFnsLocale } from "@/lib/utils";
+import type { Locale } from "@/i18n/config";
 import { CustomTooltip } from "./custom-tooltip";
 
 type Props = {
@@ -19,6 +24,8 @@ type Props = {
 };
 
 export const AreaVariant = ({ data }: Props) => {
+    const locale = useLocale() as Locale;
+
     return (
         <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={data}>
@@ -37,7 +44,7 @@ export const AreaVariant = ({ data }: Props) => {
                     axisLine={false}
                     tickLine={false}
                     dataKey="date"
-                    tickFormatter={(value) => format(value, "dd MMM")}
+                    tickFormatter={(value) => format(value, "dd MMM", { locale: dateFnsLocale(locale) })}
                     style={{ fontSize: "12px" }}
                     tickMargin={16}
                 />

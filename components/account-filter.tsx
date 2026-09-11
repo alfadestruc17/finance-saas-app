@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/select";
 
 export const AccountFilter = () => {
+    const t = useTranslations("filters");
     const router = useRouter();
     const pathname = usePathname();
     const params = useSearchParams();
@@ -41,10 +43,10 @@ export const AccountFilter = () => {
             disabled={isLoadingAccounts || isLoadingSummary}
         >
             <SelectTrigger className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus:ring-offset-0 focus:ring-transparent outline-none text-white focus:bg-white/30 transition">
-                <SelectValue placeholder="Cuenta" />
+                <SelectValue placeholder={t("accountPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all">Todas las cuentas</SelectItem>
+                <SelectItem value="all">{t("allAccounts")}</SelectItem>
                 {accounts?.map((account) => (
                     <SelectItem key={account.id} value={account.id}>
                         {account.name}

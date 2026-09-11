@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { AccountForm } from "@/features/accounts/components/account-form";
@@ -15,11 +16,12 @@ const formSchema = insertAccountSchema.pick({ name: true });
 type FormValues = z.infer<typeof formSchema>;
 
 export const EditAccountDialog = () => {
+    const t = useTranslations("accounts");
     const { isOpen, onClose, id } = useOpenAccount();
 
     const [ConfirmDialog, confirm] = useConfirm(
-        "¿Estás seguro?",
-        "Vas a eliminar esta cuenta de forma permanente.",
+        t("confirmDelete.title"),
+        t("confirmDelete.description"),
     );
 
     const accountQuery = useGetAccount(id);
@@ -59,8 +61,8 @@ export const EditAccountDialog = () => {
             <ResponsiveModal
                 open={isOpen}
                 onOpenChange={onClose}
-                title="Editar cuenta"
-                description="Edita una cuenta registrada."
+                title={t("edit.title")}
+                description={t("edit.description")}
             >
                 {isLoading ? (
                     <div className="flex items-center justify-center py-8">

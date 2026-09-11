@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Cell,
     Legend,
@@ -6,8 +8,10 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from "recharts";
+import { useLocale } from "next-intl";
 
 import { formatCurrency, formatPercentage } from "@/lib/utils";
+import type { Locale } from "@/i18n/config";
 
 const COLORS = ["#0062FF", "#12C6FF", "#FF647F", "#FF9354"];
 
@@ -19,6 +23,8 @@ type Props = {
 };
 
 export const PieVariant = ({ data }: Props) => {
+    const locale = useLocale() as Locale;
+
     return (
         <ResponsiveContainer width="100%" height={350}>
             <PieChart>
@@ -47,6 +53,8 @@ export const PieVariant = ({ data }: Props) => {
                                                 {formatPercentage(
                                                     (entry.payload as unknown as { percent: number })
                                                         .percent * 100,
+                                                    undefined,
+                                                    locale,
                                                 )}
                                             </span>
                                         </div>
@@ -57,7 +65,7 @@ export const PieVariant = ({ data }: Props) => {
                     }}
                 />
                 <Tooltip
-                    formatter={(value: unknown) => formatCurrency(Number(value))}
+                    formatter={(value: unknown) => formatCurrency(Number(value), locale)}
                 />
                 <Pie
                     data={data}

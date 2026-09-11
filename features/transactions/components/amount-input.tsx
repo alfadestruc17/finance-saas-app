@@ -1,6 +1,7 @@
 "use client";
 
 import CurrencyInput from "react-currency-input-field";
+import { useTranslations } from "next-intl";
 import { Info, MinusCircle, PlusCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -23,6 +24,8 @@ export const AmountInput = ({
     placeholder,
     disabled,
 }: Props) => {
+    const t = useTranslations("transactions.form");
+
     const parsedValue = parseFloat(value);
     const isIncome = parsedValue > 0;
     const isExpense = parsedValue < 0;
@@ -52,7 +55,7 @@ export const AmountInput = ({
                     </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    Use [+] para ingresos y [-] para gastos
+                    {t("amountTooltip")}
                 </TooltipContent>
             </Tooltip>
             <CurrencyInput
@@ -66,8 +69,8 @@ export const AmountInput = ({
                 disabled={disabled}
             />
             <p className="text-xs text-muted-foreground mt-2">
-                {isIncome && "Esta transacción cuenta como ingreso"}
-                {isExpense && "Esta transacción cuenta como gasto"}
+                {isIncome && t("amountIncomeHelper")}
+                {isExpense && t("amountExpenseHelper")}
             </p>
         </div>
     );

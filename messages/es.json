@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "title": "Finance App",
+    "description": "Gestiona tus finanzas: cuentas, categorías, transacciones e informes."
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "loading": "Cargando...",
+    "continue": "Continuar",
+    "all": "Todas",
+    "selectAll": "Seleccionar todo",
+    "selectRow": "Seleccionar fila",
+    "pickDate": "Elige una fecha"
+  },
+  "nav": {
+    "overview": "Resumen",
+    "transactions": "Transacciones",
+    "accounts": "Cuentas",
+    "categories": "Categorías"
+  },
+  "header": {
+    "welcomeBack": "Hola de nuevo{name}!",
+    "subtitle": "Este es tu informe financiero"
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "English"
+  },
+  "confirm": {
+    "areYouSure": "¿Estás seguro?",
+    "bulkDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar los elementos seleccionados de forma permanente."
+    },
+    "selectAccount": {
+      "title": "Selecciona una cuenta",
+      "description": "Elige una cuenta para importar estas transacciones."
+    }
+  },
+  "filters": {
+    "accountPlaceholder": "Cuenta",
+    "allAccounts": "Todas las cuentas",
+    "reset": "Restablecer",
+    "apply": "Aplicar"
+  },
+  "dataTable": {
+    "filterPlaceholder": "Filtrar por {field}...",
+    "deleteSelected": "Eliminar ({count})",
+    "selectedOf": "{selected} de {total} fila(s) seleccionada(s).",
+    "noResults": "No hay resultados.",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "accounts": {
+    "pageTitle": "Cuentas",
+    "addNew": "Añadir nueva",
+    "name": "Nombre",
+    "namePlaceholder": "Nombre de la cuenta",
+    "new": {
+      "title": "Nueva cuenta",
+      "description": "Crea una nueva cuenta para gestionar tus finanzas."
+    },
+    "edit": {
+      "title": "Editar cuenta",
+      "description": "Edita una cuenta registrada."
+    },
+    "createButton": "Crear cuenta",
+    "saveButton": "Guardar cambios",
+    "deleteButton": "Eliminar cuenta",
+    "confirmDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar esta cuenta de forma permanente."
+    },
+    "confirmBulkDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar las cuentas seleccionadas de forma permanente."
+    },
+    "toasts": {
+      "created": "Cuenta creada",
+      "createError": "No se pudo crear la cuenta",
+      "updated": "Cuenta actualizada",
+      "updateError": "No se pudo actualizar la cuenta",
+      "deleted": "Cuenta eliminada",
+      "deleteError": "No se pudo eliminar la cuenta",
+      "bulkDeleted": "Cuentas eliminadas",
+      "bulkDeleteError": "No se pudieron eliminar las cuentas"
+    }
+  },
+  "categories": {
+    "pageTitle": "Categorías",
+    "addNew": "Añadir nueva",
+    "name": "Nombre",
+    "namePlaceholder": "Nombre de la categoría",
+    "new": {
+      "title": "Nueva categoría",
+      "description": "Crea una nueva categoría para organizar tus transacciones."
+    },
+    "edit": {
+      "title": "Editar categoría",
+      "description": "Edita una categoría registrada."
+    },
+    "createButton": "Crear categoría",
+    "saveButton": "Guardar cambios",
+    "deleteButton": "Eliminar categoría",
+    "confirmDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar esta categoría de forma permanente."
+    },
+    "confirmBulkDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar las categorías seleccionadas de forma permanente."
+    },
+    "toasts": {
+      "created": "Categoría creada",
+      "createError": "No se pudo crear la categoría",
+      "updated": "Categoría actualizada",
+      "updateError": "No se pudo actualizar la categoría",
+      "deleted": "Categoría eliminada",
+      "deleteError": "No se pudo eliminar la categoría",
+      "bulkDeleted": "Categorías eliminadas",
+      "bulkDeleteError": "No se pudieron eliminar las categorías"
+    }
+  },
+  "transactions": {
+    "pageTitle": "Historial de transacciones",
+    "add": "Añadir",
+    "importButton": "Importar",
+    "noCategory": "Sin categoría",
+    "new": {
+      "title": "Nueva transacción",
+      "description": "Añade una nueva transacción."
+    },
+    "edit": {
+      "title": "Editar transacción",
+      "description": "Edita una transacción existente."
+    },
+    "createButton": "Crear transacción",
+    "saveButton": "Guardar cambios",
+    "deleteButton": "Eliminar transacción",
+    "confirmDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar esta transacción de forma permanente."
+    },
+    "confirmBulkDelete": {
+      "title": "¿Estás seguro?",
+      "description": "Vas a eliminar las transacciones seleccionadas de forma permanente."
+    },
+    "columns": {
+      "date": "Fecha",
+      "category": "Categoría",
+      "payee": "Beneficiario",
+      "amount": "Monto",
+      "account": "Cuenta"
+    },
+    "form": {
+      "account": "Cuenta",
+      "category": "Categoría",
+      "payee": "Beneficiario",
+      "amount": "Monto",
+      "notes": "Notas",
+      "selectAccount": "Selecciona una cuenta",
+      "selectCategory": "Selecciona una categoría",
+      "payeePlaceholder": "Añade un beneficiario",
+      "amountPlaceholder": "0.00",
+      "notesPlaceholder": "Notas opcionales",
+      "amountTooltip": "Usa [+] para ingresos y [-] para gastos",
+      "amountIncomeHelper": "Esta transacción cuenta como ingreso",
+      "amountExpenseHelper": "Esta transacción cuenta como gasto"
+    },
+    "toasts": {
+      "created": "Transacción creada",
+      "createError": "No se pudo crear la transacción",
+      "updated": "Transacción actualizada",
+      "updateError": "No se pudo actualizar la transacción",
+      "deleted": "Transacción eliminada",
+      "deleteError": "No se pudo eliminar la transacción",
+      "bulkCreated": "Transacciones creadas",
+      "bulkCreateError": "No se pudieron crear las transacciones",
+      "bulkDeleted": "Transacciones eliminadas",
+      "bulkDeleteError": "No se pudieron eliminar las transacciones"
+    },
+    "import": {
+      "title": "Importar transacción",
+      "cancel": "Cancelar",
+      "continue": "Continuar ({progress} / {total})",
+      "skip": "Omitir"
+    }
+  },
+  "summary": {
+    "remaining": "Restante",
+    "income": "Ingresos",
+    "expenses": "Gastos",
+    "sincePeriod": "desde el periodo anterior",
+    "chart": {
+      "title": "Transacciones",
+      "typeLabel": "Tipo de gráfico",
+      "area": "Gráfico de área",
+      "line": "Gráfico de línea",
+      "bar": "Gráfico de barras",
+      "empty": "No hay datos para este periodo"
+    },
+    "pie": {
+      "title": "Categorías",
+      "typeLabel": "Tipo de gráfico",
+      "pie": "Gráfico circular",
+      "radar": "Gráfico de radar",
+      "radial": "Gráfico radial",
+      "empty": "No hay datos para este periodo"
+    }
+  }
+}

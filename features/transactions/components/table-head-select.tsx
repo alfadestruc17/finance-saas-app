@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { cn } from "@/lib/utils";
 import {
     Select,
@@ -22,7 +24,14 @@ export const TableHeadSelect = ({
     selectedColumns,
     onChange,
 }: Props) => {
+    const t = useTranslations("transactions");
     const currentSelection = selectedColumns[`column_${columnIndex}`];
+
+    const optionLabels: Record<string, string> = {
+        amount: t("form.amount"),
+        payee: t("form.payee"),
+        date: t("columns.date"),
+    };
 
     return (
         <Select
@@ -35,10 +44,10 @@ export const TableHeadSelect = ({
                     currentSelection && "text-blue-500",
                 )}
             >
-                <SelectValue placeholder="Omitir" />
+                <SelectValue placeholder={t("import.skip")} />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="skip">Omitir</SelectItem>
+                <SelectItem value="skip">{t("import.skip")}</SelectItem>
                 {options.map((option, index) => {
                     const disabled =
                         Object.values(selectedColumns).includes(option) &&
@@ -49,9 +58,8 @@ export const TableHeadSelect = ({
                             key={index}
                             value={option}
                             disabled={disabled}
-                            className="capitalize"
                         >
-                            {option}
+                            {optionLabels[option]}
                         </SelectItem>
                     );
                 })}

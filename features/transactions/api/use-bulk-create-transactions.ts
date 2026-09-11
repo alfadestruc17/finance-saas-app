@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -12,6 +13,7 @@ type RequestType = InferRequestType<
 >["json"];
 
 export const useBulkCreateTransactions = () => {
+    const t = useTranslations("transactions.toasts");
     const queryClient = useQueryClient();
 
     const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -22,12 +24,12 @@ export const useBulkCreateTransactions = () => {
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Transacciones creadas");
+            toast.success(t("bulkCreated"));
             queryClient.invalidateQueries({ queryKey: ["transactions"] });
             queryClient.invalidateQueries({ queryKey: ["summary"] });
         },
         onError: () => {
-            toast.error("No se pudieron crear las transacciones");
+            toast.error(t("bulkCreateError"));
         },
     });
 

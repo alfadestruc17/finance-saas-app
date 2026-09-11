@@ -1,17 +1,16 @@
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-
 import { client } from "@/lib/hono";
-
-
 
 type ResponseType = InferResponseType<typeof client.api.accounts[":id"]["$patch"]>
 type RequestType = InferRequestType<typeof client.api.accounts[":id"]["$patch"]>["json"]
 
 export const useEditAccount = (id?: string) => {
+    const t = useTranslations("accounts.toasts");
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -27,13 +26,12 @@ export const useEditAccount = (id?: string) => {
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta actualizada")
+            toast.success(t("updated"))
             queryClient.invalidateQueries({ queryKey: ["account", { id }] })
             queryClient.invalidateQueries({ queryKey: ["accounts"] })
-            // TODO: invalidate summary and transacitons
         },
         onError: () => {
-            toast.error("Fallo en actualizar cuenta")
+            toast.error(t("updateError"))
         },
     });
     return mutation

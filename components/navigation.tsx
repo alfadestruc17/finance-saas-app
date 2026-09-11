@@ -3,37 +3,27 @@
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Menu } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { NavButton } from "./nav-button";
 import { SheetContent, SheetTrigger, Sheet } from "@/components/ui/sheet";
 
-const routes = [
-    {
-        href: "/",
-        label: "Resumen",
-    },
-    {
-        href: "/transactions",
-        label: "Transacciones",
-    },
-    {
-        href: "/accounts",
-        label: "Cuentas",
-    },
-    {
-        href: "/categories",
-        label: "Categorías",
-    },
-];
-
 export const Navigation = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const t = useTranslations("nav");
     const router = useRouter();
     const pathname = usePathname();
     const isMobile = useMedia("(max-width: 1024px)", false);
+
+    const routes = [
+        { href: "/", label: t("overview") },
+        { href: "/transactions", label: t("transactions") },
+        { href: "/accounts", label: t("accounts") },
+        { href: "/categories", label: t("categories") },
+    ];
 
     const onClick = (href: string) => {
         router.push(href);

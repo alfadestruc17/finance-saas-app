@@ -1,8 +1,12 @@
+"use client";
+
 import { cva, type VariantProps } from "class-variance-authority";
 import { IconType } from "react-icons";
 import CountUp from "react-countup";
+import { useLocale, useTranslations } from "next-intl";
 
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
+import type { Locale } from "@/i18n/config";
 import {
     Card,
     CardContent,
@@ -59,6 +63,9 @@ export const DataCard = ({
     dateRange,
     percentageChange = 0,
 }: DataCardProps) => {
+    const t = useTranslations("summary");
+    const locale = useLocale() as Locale;
+
     return (
         <Card className="border-none drop-shadow-sm">
             <CardHeader className="flex flex-row items-center justify-between gap-x-4">
@@ -80,7 +87,7 @@ export const DataCard = ({
                         end={value}
                         decimals={2}
                         decimalPlaces={2}
-                        formattingFn={formatCurrency}
+                        formattingFn={(v) => formatCurrency(v, locale)}
                     />
                 </h1>
                 <p
@@ -90,8 +97,8 @@ export const DataCard = ({
                         percentageChange < 0 && "text-rose-500",
                     )}
                 >
-                    {formatPercentage(percentageChange, { addPrefix: true })} desde el
-                    periodo anterior
+                    {formatPercentage(percentageChange, { addPrefix: true }, locale)}{" "}
+                    {t("sincePeriod")}
                 </p>
             </CardContent>
         </Card>

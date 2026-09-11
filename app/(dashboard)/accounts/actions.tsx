@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
@@ -20,9 +21,12 @@ type Props = {
 
 
 export const Actions = ({ id }: Props) => {
+    const t = useTranslations("common");
+    const tAccounts = useTranslations("accounts");
+
     const [ConfirmationDialog, confirm] = useConfirm(
-        "Are you sure",
-        " "
+        tAccounts("confirmDelete.title"),
+        tAccounts("confirmDelete.description"),
     )
 
     const deleteMutation = useDeleteAccount(id);
@@ -52,14 +56,14 @@ export const Actions = ({ id }: Props) => {
                         onClick={() => onOpen(id)}
                     >
                         <Edit className="size-4 mr-2" />
-                        Edit
+                        {t("edit")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         disabled={deleteMutation.isPending}
                         onClick={handleDelete}
                     >
                         <Trash className="size-4 mr-2" />
-                        delete
+                        {t("delete")}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

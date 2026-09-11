@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { format, parse } from "date-fns";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,6 +35,7 @@ type Props = {
 };
 
 export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
+    const t = useTranslations("transactions.import");
     const [selectedColumns, setSelectedColumns] = useState<SelectedColumnsState>({});
 
     const headers = data[0];
@@ -115,11 +117,11 @@ export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
             <Card className="border-none drop-shadow-sm">
                 <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
                     <CardTitle className="text-xl line-clamp-1">
-                        Importar transacción
+                        {t("title")}
                     </CardTitle>
                     <div className="flex flex-col lg:flex-row gap-y-2 items-center gap-x-2">
                         <Button onClick={onCancel} size="sm" className="w-full lg:w-auto">
-                            Cancelar
+                            {t("cancel")}
                         </Button>
                         <Button
                             size="sm"
@@ -127,7 +129,7 @@ export const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
                             onClick={handleContinue}
                             className="w-full lg:w-auto"
                         >
-                            Continuar ({progress} / {requiredOptions.length})
+                            {t("continue", { progress, total: requiredOptions.length })}
                         </Button>
                     </div>
                 </CardHeader>

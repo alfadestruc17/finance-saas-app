@@ -1,4 +1,5 @@
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 import { useCreateTransaction } from "@/features/transactions/api/use-create-transaction";
@@ -12,6 +13,7 @@ import { useCreateCategory } from "@/features/categories/api/use-create-category
 import { ResponsiveModal } from "@/components/responsive-modal";
 
 export const NewTransactionDialog = () => {
+    const t = useTranslations("transactions");
     const { isOpen, onClose } = useNewTransaction();
 
     const createMutation = useCreateTransaction();
@@ -43,8 +45,8 @@ export const NewTransactionDialog = () => {
         <ResponsiveModal
             open={isOpen}
             onOpenChange={onClose}
-            title="Nueva transacción"
-            description="Añade una nueva transacción."
+            title={t("new.title")}
+            description={t("new.description")}
         >
             {isLoading ? (
                 <div className="flex items-center justify-center py-8">

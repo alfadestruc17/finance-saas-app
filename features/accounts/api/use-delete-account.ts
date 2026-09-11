@@ -1,16 +1,15 @@
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-
 import { client } from "@/lib/hono";
-
-
 
 type ResponseType = InferResponseType<typeof client.api.accounts[":id"]["$delete"]>
 
 export const useDeleteAccount = (id?: string) => {
+    const t = useTranslations("accounts.toasts");
     const queryClient = useQueryClient();
 
     const mutation = useMutation<
@@ -24,13 +23,14 @@ export const useDeleteAccount = (id?: string) => {
             return await response.json();
         },
         onSuccess: () => {
-            toast.success("Cuenta eliminada")
+            toast.success(t("deleted"))
             queryClient.invalidateQueries({ queryKey: ["account", { id }] })
             queryClient.invalidateQueries({ queryKey: ["accounts"] })
-            // TODO: invalidate summary and transacitons
+            queryClient.invalidateQueries({ queryKey: ["transactions"] })
+            queryClient.invalidateQueries({ queryKey: ["summary"] })
         },
         onError: () => {
-            toast.error("Fallo en eliminar cuenta")
+            toast.error(t("deleteError"))
         },
     });
     return mutation

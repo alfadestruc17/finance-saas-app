@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 
 import { CategoryForm } from "@/features/categories/components/category-form";
 import { useNewCategory } from "@/features/categories/hooks/use-new-category";
@@ -11,6 +12,7 @@ const formSchema = insertCategoriesSchema.pick({ name: true });
 type FormValues = z.infer<typeof formSchema>;
 
 export const NewCategoryDialog = () => {
+    const t = useTranslations("categories");
     const { isOpen, onClose } = useNewCategory();
     const mutation = useCreateCategory();
 
@@ -26,8 +28,8 @@ export const NewCategoryDialog = () => {
         <ResponsiveModal
             open={isOpen}
             onOpenChange={onClose}
-            title="Nueva categoría"
-            description="Crea una nueva categoría para organizar tus transacciones."
+            title={t("new.title")}
+            description={t("new.description")}
         >
             <CategoryForm
                 onSubmit={onSubmit}

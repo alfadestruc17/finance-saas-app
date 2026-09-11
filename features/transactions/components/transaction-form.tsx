@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
@@ -61,6 +62,9 @@ export const TransactionForm = ({
     onCreateAccount,
     onCreateCategory,
 }: Props) => {
+    const t = useTranslations("transactions");
+    const tForm = useTranslations("transactions.form");
+
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: defaultValues,
@@ -108,10 +112,10 @@ export const TransactionForm = ({
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Cuenta</FormLabel>
+                            <FormLabel>{tForm("account")}</FormLabel>
                             <FormControl>
                                 <Select
-                                    placeholder="Selecciona una cuenta"
+                                    placeholder={tForm("selectAccount")}
                                     options={accountOptions}
                                     onCreate={onCreateAccount}
                                     value={field.value}
@@ -128,10 +132,10 @@ export const TransactionForm = ({
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Categoría</FormLabel>
+                            <FormLabel>{tForm("category")}</FormLabel>
                             <FormControl>
                                 <Select
-                                    placeholder="Selecciona una categoría"
+                                    placeholder={tForm("selectCategory")}
                                     options={categoryOptions}
                                     onCreate={onCreateCategory}
                                     value={field.value}
@@ -148,11 +152,11 @@ export const TransactionForm = ({
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Beneficiario</FormLabel>
+                            <FormLabel>{tForm("payee")}</FormLabel>
                             <FormControl>
                                 <Input
                                     disabled={disabled}
-                                    placeholder="Añade un beneficiario"
+                                    placeholder={tForm("payeePlaceholder")}
                                     {...field}
                                 />
                             </FormControl>
@@ -165,12 +169,12 @@ export const TransactionForm = ({
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Monto</FormLabel>
+                            <FormLabel>{tForm("amount")}</FormLabel>
                             <FormControl>
                                 <AmountInput
                                     {...field}
                                     disabled={disabled}
-                                    placeholder="0.00"
+                                    placeholder={tForm("amountPlaceholder")}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -182,13 +186,13 @@ export const TransactionForm = ({
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Notas</FormLabel>
+                            <FormLabel>{tForm("notes")}</FormLabel>
                             <FormControl>
                                 <Textarea
                                     {...field}
                                     value={field.value ?? ""}
                                     disabled={disabled}
-                                    placeholder="Notas opcionales"
+                                    placeholder={tForm("notesPlaceholder")}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -196,7 +200,7 @@ export const TransactionForm = ({
                     )}
                 />
                 <Button className="w-full" disabled={disabled}>
-                    {id ? "Guardar cambios" : "Crear transacción"}
+                    {id ? t("saveButton") : t("createButton")}
                 </Button>
                 {!!id && (
                     <Button
@@ -207,7 +211,7 @@ export const TransactionForm = ({
                         variant="outline"
                     >
                         <Trash className="size-4 mr-2" />
-                        Eliminar transacción
+                        {t("deleteButton")}
                     </Button>
                 )}
             </form>

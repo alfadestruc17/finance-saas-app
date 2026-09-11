@@ -1,4 +1,5 @@
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useOpenTransaction } from "@/features/transactions/hooks/use-open-transaction";
 import { useGetTransaction } from "@/features/transactions/api/use-get-transaction";
@@ -16,11 +17,12 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { ResponsiveModal } from "@/components/responsive-modal";
 
 export const EditTransactionDialog = () => {
+    const t = useTranslations("transactions");
     const { isOpen, onClose, id } = useOpenTransaction();
 
     const [ConfirmDialog, confirm] = useConfirm(
-        "¿Estás seguro?",
-        "Vas a eliminar esta transacción de forma permanente.",
+        t("confirmDelete.title"),
+        t("confirmDelete.description"),
     );
 
     const transactionQuery = useGetTransaction(id);
@@ -95,8 +97,8 @@ export const EditTransactionDialog = () => {
             <ResponsiveModal
                 open={isOpen}
                 onOpenChange={onClose}
-                title="Editar transacción"
-                description="Edita una transacción existente."
+                title={t("edit.title")}
+                description={t("edit.description")}
             >
                 {isLoading ? (
                     <div className="flex items-center justify-center py-8">

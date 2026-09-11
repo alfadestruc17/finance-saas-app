@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Cell,
     Legend,
@@ -5,8 +7,10 @@ import {
     RadialBarChart,
     ResponsiveContainer,
 } from "recharts";
+import { useLocale } from "next-intl";
 
 import { formatCurrency } from "@/lib/utils";
+import type { Locale } from "@/i18n/config";
 
 const COLORS = ["#0062FF", "#12C6FF", "#FF647F", "#FF9354"];
 
@@ -18,6 +22,8 @@ type Props = {
 };
 
 export const RadialVariant = ({ data }: Props) => {
+    const locale = useLocale() as Locale;
+
     return (
         <ResponsiveContainer width="100%" height={350}>
             <RadialBarChart
@@ -72,6 +78,7 @@ export const RadialVariant = ({ data }: Props) => {
                                                 {formatCurrency(
                                                     (entry.payload as unknown as { value: number })
                                                         .value,
+                                                    locale,
                                                 )}
                                             </span>
                                         </div>

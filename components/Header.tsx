@@ -5,6 +5,7 @@ import { HeaderLogo } from "./header-logo"
 import { Navigation } from "./navigation"
 import { WelcomeMsg } from "./welcome-msg"
 import { Filters } from "./filters"
+import { LanguageSwitcher } from "./language-switcher"
 
 export const Header = () => {
     return (
@@ -15,12 +16,15 @@ export const Header = () => {
                         <HeaderLogo />
                         <Navigation />
                     </div>
-                    <ClerkLoaded>
-                        <UserButton afterSignOutUrl="/" />
-                    </ClerkLoaded>
-                    <ClerkLoading>
-                        <Loader2 className="size-8 animate-spin text-slate-400" />
-                    </ClerkLoading>
+                    <div className="flex items-center gap-x-4">
+                        <LanguageSwitcher />
+                        <ClerkLoaded>
+                            <UserButton afterSignOutUrl="/" />
+                        </ClerkLoaded>
+                        <ClerkLoading>
+                            <Loader2 className="size-8 animate-spin text-slate-400" />
+                        </ClerkLoading>
+                    </div>
                 </div>
                 <WelcomeMsg />
                 <Filters />

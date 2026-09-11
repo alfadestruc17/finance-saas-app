@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { transactions as transactionsSchema } from "@/db/schema";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
@@ -38,6 +39,8 @@ const INITIAL_IMPORT_RESULTS: { data: string[][] } = {
 };
 
 const TransactionsPage = () => {
+    const t = useTranslations("transactions");
+
     const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
     const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
@@ -121,7 +124,7 @@ const TransactionsPage = () => {
             <Card className="border-none drop-shadow-sm">
                 <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
                     <CardTitle className="text-xl line-clamp-1">
-                        Historial de transacciones
+                        {t("pageTitle")}
                     </CardTitle>
                     <div className="flex flex-col lg:flex-row gap-y-2 items-center gap-x-2">
                         <Button
@@ -130,7 +133,7 @@ const TransactionsPage = () => {
                             className="w-full lg:w-auto"
                         >
                             <Plus className="size-4 mr-2" />
-                            Añadir
+                            {t("add")}
                         </Button>
                         <UploadButton onUpload={onUpload} />
                     </div>

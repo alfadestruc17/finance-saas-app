@@ -1,6 +1,9 @@
+"use client";
+
 import { z } from "zod";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
@@ -36,6 +39,8 @@ export const AccountForm = ({
     onDelete,
     disabled,
 }: Props) => {
+    const t = useTranslations("accounts");
+
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: defaultValues,
@@ -58,20 +63,21 @@ export const AccountForm = ({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Name
+                                {t("name")}
                             </FormLabel>
                             <FormControl>
                                 <Input
                                     disabled={disabled}
-                                    placeholder="Account Name"
+                                    placeholder={t("namePlaceholder")}
                                     {...field}
                                 />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
                 <Button className="w-full" disabled={disabled}>
-                    {id ? "Save Changes" : "Create Account"}
+                    {id ? t("saveButton") : t("createButton")}
                 </Button>
                 {!!id && (
                     <Button
@@ -82,13 +88,10 @@ export const AccountForm = ({
                         variant="outline"
                     >
                         <Trash className="size-4 mr-2" />
-                        Delete account
+                        {t("deleteButton")}
                     </Button>
                 )}
             </form>
         </Form>
     )
 }
-
-
-

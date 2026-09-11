@@ -1,9 +1,11 @@
 "use client";
 
 import { format } from "date-fns";
+import { useLocale, useTranslations } from "next-intl";
 import { Calendar as CalendarIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn, dateFnsLocale } from "@/lib/utils";
+import type { Locale } from "@/i18n/config";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -19,6 +21,9 @@ type Props = {
 };
 
 export const DatePicker = ({ value, onChange, disabled }: Props) => {
+    const t = useTranslations("common");
+    const locale = useLocale() as Locale;
+
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -31,7 +36,11 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
                     )}
                 >
                     <CalendarIcon className="size-4 mr-2" />
-                    {value ? format(value, "PPP") : <span>Pick a date</span>}
+                    {value ? (
+                        format(value, "PPP", { locale: dateFnsLocale(locale) })
+                    ) : (
+                        <span>{t("pickDate")}</span>
+                    )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
@@ -41,6 +50,7 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
                     onSelect={(date) => onChange(date)}
                     disabled={disabled}
                     autoFocus
+                    locale={dateFnsLocale(locale)}
                 />
             </PopoverContent>
         </Popover>

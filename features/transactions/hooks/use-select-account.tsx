@@ -1,4 +1,5 @@
 import { useRef, useState, JSX } from "react";
+import { useTranslations } from "next-intl";
 
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useCreateAccount } from "@/features/accounts/api/use-create-account";
@@ -18,6 +19,10 @@ export const useSelectAccount = (): [
     () => JSX.Element,
     () => Promise<string | undefined>,
 ] => {
+    const t = useTranslations("confirm.selectAccount");
+    const tCommon = useTranslations("common");
+    const tForm = useTranslations("transactions.form");
+
     const accountQuery = useGetAccounts();
     const accountMutation = useCreateAccount();
     const onCreateAccount = (name: string) => accountMutation.mutate({ name });
@@ -54,13 +59,13 @@ export const useSelectAccount = (): [
         <Dialog open={promise !== null} onOpenChange={handleCancel}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Selecciona una cuenta</DialogTitle>
+                    <DialogTitle>{t("title")}</DialogTitle>
                     <DialogDescription>
-                        Elige una cuenta para importar estas transacciones.
+                        {t("description")}
                     </DialogDescription>
                 </DialogHeader>
                 <Select
-                    placeholder="Selecciona una cuenta"
+                    placeholder={tForm("selectAccount")}
                     options={accountOptions}
                     onCreate={onCreateAccount}
                     onChange={(value) => (selectValue.current = value)}
@@ -68,9 +73,9 @@ export const useSelectAccount = (): [
                 />
                 <DialogFooter className="pt-2">
                     <Button onClick={handleCancel} variant="outline">
-                        Cancelar
+                        {tCommon("cancel")}
                     </Button>
-                    <Button onClick={handleConfirm}>Continuar</Button>
+                    <Button onClick={handleConfirm}>{tCommon("continue")}</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

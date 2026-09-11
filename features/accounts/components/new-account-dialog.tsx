@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 
 import { AccountForm } from "@/features/accounts/components/account-form";
 import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
@@ -11,6 +12,7 @@ const formSchema = insertAccountSchema.pick({ name: true });
 type FormValues = z.infer<typeof formSchema>;
 
 export const NewAccountDialog = () => {
+    const t = useTranslations("accounts");
     const { isOpen, onClose } = useNewAccount();
     const mutation = useCreateAccount();
 
@@ -26,8 +28,8 @@ export const NewAccountDialog = () => {
         <ResponsiveModal
             open={isOpen}
             onOpenChange={onClose}
-            title="Nueva cuenta"
-            description="Crea una nueva cuenta para gestionar tus finanzas."
+            title={t("new.title")}
+            description={t("new.description")}
         >
             <AccountForm
                 onSubmit={onSubmit}
